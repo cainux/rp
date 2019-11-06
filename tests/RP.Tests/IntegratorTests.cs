@@ -43,7 +43,7 @@ namespace RP.Tests
             mocker.Use(mockAlbumRepo.Object);
             mocker.Use(mockPhotoRepo.Object);
 
-            SUT = mocker.CreateInstance<IIntegratorService>();
+            SUT = mocker.CreateInstance<IntegratorService>();
         }
 
         [Fact]
