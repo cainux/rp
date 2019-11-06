@@ -4,7 +4,7 @@
     "RP.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "albums",
+      "launchUrl": "",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

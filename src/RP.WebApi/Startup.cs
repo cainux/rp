@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Refit;
 using RP.Core.Repositories;
 using RP.Core.Services;
@@ -27,6 +28,10 @@ namespace RP.WebApi
             services.AddTransient<IPhotoRepository, PhotoRepository>();
             services.AddTransient<IIntegratorService, IntegratorService>();
             services.AddTransient(_ => RestService.For<IJsonPlaceHolderApi>("http://jsonplaceholder.typicode.com/"));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Albums API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,6 +40,13 @@ namespace RP.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Albums API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
