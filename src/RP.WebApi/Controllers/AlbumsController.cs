@@ -10,7 +10,7 @@ namespace RP.WebApi.Controllers
     [Route("[controller]")]
     public class AlbumsController : ControllerBase
     {
-        private IIntegratorService integratorService;
+        private readonly IIntegratorService integratorService;
 
         public AlbumsController(IIntegratorService integratorService)
         {

@@ -9,7 +9,7 @@ namespace RP.Infrastructure.Repositories
 {
     public class AlbumRepository : IAlbumRepository
     {
-        private IJsonPlaceHolderApi jsonPlaceHolderApi;
+        private readonly IJsonPlaceHolderApi jsonPlaceHolderApi;
 
         public AlbumRepository(IJsonPlaceHolderApi jsonPlaceHolderApi)
         {

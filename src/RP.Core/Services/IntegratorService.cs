@@ -8,8 +8,8 @@ namespace RP.Core.Services
 {
     public class IntegratorService : IIntegratorService
     {
-        private IAlbumRepository albumRepository;
-        private IPhotoRepository photoRepository;
+        private readonly IAlbumRepository albumRepository;
+        private readonly IPhotoRepository photoRepository;
 
         public IntegratorService(IAlbumRepository albumRepository, IPhotoRepository photoRepository)
         {

@@ -9,7 +9,7 @@ namespace RP.Infrastructure.Repositories
 {
     public class PhotoRepository : IPhotoRepository
     {
-        private IJsonPlaceHolderApi jsonPlaceHolderApi;
+        private readonly IJsonPlaceHolderApi jsonPlaceHolderApi;
 
         public PhotoRepository(IJsonPlaceHolderApi jsonPlaceHolderApi)
         {
