@@ -21,8 +21,8 @@ namespace RP.Core.Services
         {
             var albumsDict = new Dictionary<int, Album>();
 
-            var albumsGetter = albumRepository.GetAllAsync();
-            var photosGetter = photoRepository.GetAllAsync();
+            var albumsGetter = albumRepository.GetAsync();
+            var photosGetter = photoRepository.GetAsync();
 
             var sourceAlbums = await albumsGetter;
 
@@ -37,14 +37,7 @@ namespace RP.Core.Services
             {
                 if (albumsDict.ContainsKey(sourcePhoto.AlbumId))
                 {
-                    var album = albumsDict[sourcePhoto.AlbumId];
-
-                    if (album.Photos == null)
-                    {
-                        album.Photos = new List<Photo>();
-                    }
-
-                    album.Photos.Add(sourcePhoto);
+                    albumsDict[sourcePhoto.AlbumId].Photos.Add(sourcePhoto);
                 }
             }
 
@@ -54,31 +47,25 @@ namespace RP.Core.Services
         public async Task<IEnumerable<Album>> GetByUserIdAsync(int userId)
         {
             var albumsDict = new Dictionary<int, Album>();
+            var albums = (await albumRepository.GetAsync(userId)).ToArray();
 
-            var albumsGetter = albumRepository.GetAllAsync();
-            var photosGetter = photoRepository.GetAllAsync();
-
-            var sourceAlbums = await albumsGetter;
-
-            foreach (var sourceAlbum in sourceAlbums.Where(x => x.UserId == userId))
+            foreach (var album in albums)
             {
-                albumsDict.Add(sourceAlbum.Id, sourceAlbum);
+                albumsDict.Add(album.Id, album);
             }
 
-            var sourcePhotos = await photosGetter;
+            var photoGetters = new Task<IEnumerable<Photo>>[albums.Length];
 
-            foreach (var sourcePhoto in sourcePhotos)
+            for (int i = 0; i < albums.Length; i++)
             {
-                if (albumsDict.ContainsKey(sourcePhoto.AlbumId))
+                photoGetters[i] = photoRepository.GetAsync(albums[i].Id);
+            }
+
+            foreach(var photos in await Task.WhenAll(photoGetters))
+            {
+                foreach (var photo in photos)
                 {
-                    var album = albumsDict[sourcePhoto.AlbumId];
-
-                    if (album.Photos == null)
-                    {
-                        album.Photos = new List<Photo>();
-                    }
-
-                    album.Photos.Add(sourcePhoto);
+                    albumsDict[photo.AlbumId].Photos.Add(photo);
                 }
             }
 

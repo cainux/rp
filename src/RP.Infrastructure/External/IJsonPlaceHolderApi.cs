@@ -8,9 +8,9 @@ namespace RP.Infrastructure.External
     public interface IJsonPlaceHolderApi
     {
         [Get("/albums")]
-        Task<IEnumerable<AlbumDto>> GetAlbums();
+        Task<IEnumerable<AlbumDto>> GetAlbumsAsync(int? userId = null);
 
         [Get("/photos")]
-        Task<IEnumerable<PhotoDto>> GetPhotos();
+        Task<IEnumerable<PhotoDto>> GetPhotosAsync(int? albumId = null);
     }
 }

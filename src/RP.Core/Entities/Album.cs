@@ -7,6 +7,6 @@ namespace RP.Core.Entities
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Title { get; set; }
-        public IList<Photo> Photos { get; set; }
+        public IList<Photo> Photos { get; } = new List<Photo>();
     }
 }

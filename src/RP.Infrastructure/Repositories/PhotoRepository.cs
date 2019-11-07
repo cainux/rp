@@ -16,9 +16,9 @@ namespace RP.Infrastructure.Repositories
             this.jsonPlaceHolderApi = jsonPlaceHolderApi;
         }
 
-        public async Task<IEnumerable<Photo>> GetAllAsync()
+        public async Task<IEnumerable<Photo>> GetAsync(int? albumId = null)
         {
-            var data = await jsonPlaceHolderApi.GetPhotos();
+            var data = await jsonPlaceHolderApi.GetPhotosAsync(albumId);
 
             return data.Select(x => new Photo
             {
